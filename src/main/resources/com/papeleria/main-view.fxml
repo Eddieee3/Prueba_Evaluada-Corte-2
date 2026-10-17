@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.papeleria.MainController">
+
+    <top>
+        <VBox spacing="8">
+            <padding><Insets top="10" right="10" bottom="5" left="10"/></padding>
+            <Label text="Papelería Campus - Catálogo" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+        </VBox>
+    </top>
+
+    <!-- tabla en el centro -->
+    <center>
+        <TableView fx:id="tablaProductos">
+            <BorderPane.margin><Insets left="10" right="5"/></BorderPane.margin>
+            <columns>
+                <TableColumn fx:id="colId" text="ID"/>
+                <TableColumn fx:id="colCodigo" text="Código"/>
+                <TableColumn fx:id="colNombre" text="Nombre"/>
+                <TableColumn fx:id="colCategoria" text="Categoría"/>
+                <TableColumn fx:id="colPrecio" text="Precio"/>
+                <TableColumn fx:id="colStock" text="Stock"/>
+            </columns>
+        </TableView>
+    </center>
+
+    <!-- formulario a la derecha -->
+    <right>
+        <VBox spacing="8" prefWidth="260">
+            <padding><Insets top="0" right="10" bottom="0" left="5"/></padding>
+            <Label text="Datos del producto" style="-fx-font-weight: bold;"/>
+            <GridPane hgap="6" vgap="8">
+                <Label text="Código:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtCodigo" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <Label text="Nombre:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtNombre" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <Label text="Categoría:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="cbCategoria" prefWidth="170" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <Label text="Precio:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtPrecio" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                <Label text="Stock:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                <TextField fx:id="txtStock" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+            </GridPane>
+            <HBox spacing="6">
+                <Button text="Nuevo/Limpiar" onAction="#onNuevo"/>
+                <Button text="Guardar" onAction="#onGuardar"/>
+            </HBox>
+            <HBox spacing="6">
+                <Button text="Actualizar" onAction="#onActualizar"/>
+                <Button text="Eliminar" onAction="#onEliminar"/>
+            </HBox>
+        </VBox>
+    </right>
+
+    <!-- contador abajo -->
+    <bottom>
+        <HBox>
+            <padding><Insets top="5" right="10" bottom="8" left="10"/></padding>
+            <Label fx:id="lblContador" text="Registros: 0"/>
+        </HBox>
+    </bottom>
+</BorderPane>

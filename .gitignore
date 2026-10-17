@@ -1,0 +1,8 @@
+# credenciales de la base de datos (cada quien tiene el suyo)
+db.properties
+
+# maven / intellij
+target/
+.idea/
+*.iml
+out/
