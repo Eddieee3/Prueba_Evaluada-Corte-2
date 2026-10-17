@@ -27,6 +27,10 @@ public class MainController {
     @FXML private TextField txtPrecio;
     @FXML private TextField txtStock;
 
+    @FXML private TextField txtBuscar;
+    @FXML private ComboBox<String> cbFiltroCategoria;
+    @FXML private CheckBox chkSoloStock;
+
     @FXML private Label lblContador;
 
     private ProductoDAO dao = new ProductoDAO();
@@ -57,6 +61,9 @@ public class MainController {
         // categorias
         cbCategoria.getItems().addAll("Papelería", "Tecnología", "Accesorios");
         cbCategoria.setPromptText("Seleccione...");
+
+        cbFiltroCategoria.getItems().addAll("Todas", "Papelería", "Tecnología", "Accesorios");
+        cbFiltroCategoria.setValue("Todas");
 
         // al seleccionar una fila se pasan los datos al formulario
         tablaProductos.getSelectionModel().selectedItemProperty().addListener((obs, viejo, nuevo) -> {
@@ -178,6 +185,35 @@ public class MainController {
         } catch (SQLException e) {
             errorBD("No se pudo eliminar el producto.", e);
         }
+    }
+
+    // ---------------- botones de busqueda ----------------
+
+    @FXML
+    private void onBuscar() {
+        String texto = txtBuscar.getText() == null ? "" : txtBuscar.getText().trim();
+        String cat = cbFiltroCategoria.getValue();
+        boolean soloStock = chkSoloStock.isSelected();
+        try {
+            List<Producto> res = dao.searchAndFilter(texto, cat, soloStock);
+            listaProductos.setAll(res);
+        } catch (SQLException e) {
+            errorBD("Error al buscar productos.", e);
+        }
+        actualizarContador();
+    }
+
+    @FXML
+    private void onLimpiarFiltros() {
+        txtBuscar.clear();
+        cbFiltroCategoria.setValue("Todas");
+        chkSoloStock.setSelected(false);
+        cargarProductos();
+    }
+
+    @FXML
+    private void onRecargar() {
+        cargarProductos();
     }
 
     // ---------------- validaciones ----------------

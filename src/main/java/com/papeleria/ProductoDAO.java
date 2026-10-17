@@ -36,6 +36,41 @@ public class ProductoDAO {
         return lista;
     }
 
+    // buscar por nombre o codigo, filtrar por categoria y por stock
+    public List<Producto> searchAndFilter(String texto, String categoria, boolean soloConStock) throws SQLException {
+        List<Producto> lista = new ArrayList<>();
+        List<Object> params = new ArrayList<>();
+
+        String sql = "SELECT id_producto, codigo, nombre, categoria, precio, stock FROM producto WHERE 1=1";
+
+        if (texto != null && !texto.trim().isEmpty()) {
+            sql += " AND (nombre ILIKE ? OR codigo ILIKE ?)";
+            params.add("%" + texto.trim() + "%");
+            params.add("%" + texto.trim() + "%");
+        }
+        if (categoria != null && !categoria.equals("Todas")) {
+            sql += " AND categoria = ?";
+            params.add(categoria);
+        }
+        if (soloConStock) {
+            sql += " AND stock > 0";
+        }
+        sql += " ORDER BY id_producto";
+
+        try (Connection con = DatabaseConnection.getConnection();
+             PreparedStatement stmt = con.prepareStatement(sql)) {
+            for (int i = 0; i < params.size(); i++) {
+                stmt.setObject(i + 1, params.get(i));
+            }
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    lista.add(leerFila(rs));
+                }
+            }
+        }
+        return lista;
+    }
+
     // revisar si el codigo ya existe (idExcluir sirve para cuando se actualiza)
     public boolean existeCodigo(String codigo, Integer idExcluir) throws SQLException {
         String sql = "SELECT COUNT(*) FROM producto WHERE codigo = ? AND id_producto <> ?";

@@ -7,10 +7,21 @@
 <BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.papeleria.MainController">
 
+    <!-- busqueda arriba -->
     <top>
         <VBox spacing="8">
             <padding><Insets top="10" right="10" bottom="5" left="10"/></padding>
             <Label text="Papelería Campus - Catálogo" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <Label text="Buscar:"/>
+                <TextField fx:id="txtBuscar" promptText="Nombre o código" prefWidth="200"/>
+                <Label text="Categoría:"/>
+                <ComboBox fx:id="cbFiltroCategoria" prefWidth="140"/>
+                <CheckBox fx:id="chkSoloStock" text="Solo con existencias"/>
+                <Button text="Buscar" onAction="#onBuscar"/>
+                <Button text="Limpiar Filtros" onAction="#onLimpiarFiltros"/>
+                <Button text="Recargar" onAction="#onRecargar"/>
+            </HBox>
         </VBox>
     </top>
 
